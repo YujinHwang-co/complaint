@@ -38,7 +38,7 @@ public class DBConfig {
 
         bean.setDataSource(dataSource);
         bean.setMapperLocations(applicationContext.getResources("classpath:/mybatis-mapper/**/*.xml"));
-        bean.setTypeAliasesPackage("com.personal.complaint.server.models");
+        bean.setTypeAliasesPackage("com.personal.complaint.server.model");
         bean.setConfigLocation(applicationContext.getResource("classpath:mybatis-config.xml")); // 카멜케이스 적용 위함
 
         return bean.getObject();
