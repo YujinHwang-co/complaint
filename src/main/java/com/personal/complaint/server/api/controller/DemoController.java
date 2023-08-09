@@ -1,6 +1,7 @@
 package com.personal.complaint.server.api.controller;
 
 import com.personal.complaint.server.global.BaseController;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,8 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RequestMapping("/api")
 public class DemoController extends BaseController {
-    @GetMapping("/hello")
+
+    @Operation(summary = "swagger test", description = "swagger test")
+    @GetMapping("/demo")
     public String helloWorld() {
-        return "hello!";
+        return "demo controller";
     }
 }
