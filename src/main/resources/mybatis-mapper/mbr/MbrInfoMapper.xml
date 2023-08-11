@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.personal.complaint.server.repository.mbr.MbrInfoRepository">
+<insert id="insertMbrInfo" parameterType="com.personal.complaint.server.model.MbrInfoVo" useGeneratedKeys="true" keyProperty="mbrNo" keyColumn="mbr_no">
+    insert into complaint.mbr_info
+    set join_dt = NOW()
+    <if test="mbrId != null">, mbr_id = #{mbrId}</if>
+    <if test="mbrNm != null">, mbr_nm = #{mbrNm}</if>
+    <if test="password != null">,password = #{password}</if>
+</insert>
+
+
+
+</mapper>
