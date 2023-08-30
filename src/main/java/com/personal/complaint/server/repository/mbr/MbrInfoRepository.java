@@ -7,5 +7,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 @Mapper
 public interface MbrInfoRepository {
+    MbrInfoVo getMbrInfo(MbrInfoVo param);
     int insertMbrInfo(MbrInfoVo param);
+    int updateMbrInfo(MbrInfoVo param);
+    int deleteMbrInfo(MbrInfoVo param);
 }

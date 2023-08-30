@@ -3,7 +3,22 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.personal.complaint.server.repository.mbr.MbrInfoRepository">
-<insert id="insertMbrInfo" parameterType="com.personal.complaint.server.model.MbrInfoVo" useGeneratedKeys="true" keyProperty="mbrNo" keyColumn="mbr_no">
+<sql id = "listColumns">
+    a.mbr_seq
+    , a.mbr_id
+    , a.mbr_nm
+    , a.mbtlnum
+    , a.zip
+    , a.addr
+    , a.addr_detail
+    , a.password
+    , a.join_dt
+    , a.last_mdf_dt
+</sql>
+<select id="selectMbrInfo" parameterType="com.personal.complaint.server.model.MbrInfoVo" resultType="com.personal.complaint.server.model.MbrInfoVo">
+
+</select>
+<insert id="insertMbrInfo" parameterType="com.personal.complaint.server.model.MbrInfoVo" useGeneratedKeys="true" keyProperty="mbrSeq" keyColumn="mbr_seq">
     insert into mbr_info
     set join_dt = NOW()
     <if test="mbrId != null">, mbr_id = #{mbrId}</if>
@@ -15,6 +30,14 @@
     <if test="password != null">,password = #{password}</if>
 </insert>
 
+<update id="updateMbrInfo" parameterType="com.personal.complaint.server.model.MbrInfoVo" >
 
+
+</update>
+
+<delete id="deleteMbrInfo" parameterType="int">
+    delete from complaint.mbr_info
+    where mbr_seq = #{mbrSeq}
+</delete>
 
 </mapper>

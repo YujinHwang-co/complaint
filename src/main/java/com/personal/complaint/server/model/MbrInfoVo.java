@@ -10,7 +10,7 @@ import java.util.Date;
 @Data
 public class MbrInfoVo {
     @Schema(description = "회원 번호")
-    Long mbrNo;
+    Long mbrSeq;
     @Schema(description = "회원 ID")
     @NotBlank
     String mbrId;
