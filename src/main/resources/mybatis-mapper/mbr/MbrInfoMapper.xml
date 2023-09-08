@@ -15,27 +15,37 @@
     , a.join_dt
     , a.last_mdf_dt
 </sql>
-<select id="selectMbrInfo" parameterType="com.personal.complaint.server.model.MbrInfoVo" resultType="com.personal.complaint.server.model.MbrInfoVo">
-
+<select id="getMbrInfo" parameterType="com.personal.complaint.server.model.MbrInfoVo" resultType="com.personal.complaint.server.model.MbrInfoVo">
+    select <include refid="listColumns"><property name="alias" value="a"/></include>
+    from complaint.mbr_info as a
+    where mbr_seq = #{mbrSeq}
 </select>
 <insert id="insertMbrInfo" parameterType="com.personal.complaint.server.model.MbrInfoVo" useGeneratedKeys="true" keyProperty="mbrSeq" keyColumn="mbr_seq">
-    insert into mbr_info
+    insert into complaint.mbr_info
     set join_dt = NOW()
-    <if test="mbrId != null">, mbr_id = #{mbrId}</if>
-    <if test="mbrNm != null">, mbr_nm = #{mbrNm}</if>
-    <if test="mbtlnum != null">, mbtlnum = #{mbtlnum}</if>
-    <if test="zip != null">, zip = #{zip}</if>
-    <if test="addr != null">, addr = #{addr}</if>
-    <if test="addrDetail != null">, addr_detail = #{addrDetail}</if>
+    <if test="mbrId != null">,mbr_id = #{mbrId}</if>
+    <if test="mbrNm != null">,mbr_nm = #{mbrNm}</if>
+    <if test="mbtlnum != null">,mbtlnum = #{mbtlnum}</if>
+    <if test="zip != null">,zip = #{zip}</if>
+    <if test="addr != null">,addr = #{addr}</if>
+    <if test="addrDetail != null">,addr_detail = #{addrDetail}</if>
     <if test="password != null">,password = #{password}</if>
 </insert>
 
 <update id="updateMbrInfo" parameterType="com.personal.complaint.server.model.MbrInfoVo" >
-
-
+    update complaint.mbr_info
+    set last_mdf_dt = NOW()
+    <if test="mbrId != null">,mbr_id = #{mbrId}</if>
+    <if test="mbrNm != null">,mbr_nm = #{mbrNm}</if>
+    <if test="mbtlnum != null">,mbtlnum = #{mbtlnum}</if>
+    <if test="zip != null">,zip = #{zip}</if>
+    <if test="addr != null">,addr = #{addr}</if>
+    <if test="addrDetail != null">,addr_detail = #{addrDetail}</if>
+    <if test="password != null">,password = #{password}</if>
+    where mbr_seq = #{mbrSeq}
 </update>
 
-<delete id="deleteMbrInfo" parameterType="int">
+<delete id="deleteMbrInfo" parameterType="com.personal.complaint.server.model.MbrInfoVo" >
     delete from complaint.mbr_info
     where mbr_seq = #{mbrSeq}
 </delete>

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@Tag(name = "MbrInfo API Controller", description = "MbrInfo controller")
+@Tag(name = "MbrInfo API Controller", description = "회원정보 관련 MbrInfo API controller")
 @Slf4j
 @RequiredArgsConstructor
 @RestController
@@ -38,7 +38,7 @@ public class MbrInfoController extends BaseController {
         return rb;
     }
 
-    @Operation(summary = "회원정보 저장(회원 가입)", description = "회원정보 저장(회원 가입)")
+    @Operation(summary = "회원정보 저장(회원 가입)", description = "회원정보 저장(회원 가입)하는 메서드")
     @PostMapping("/insertMbrInfo")
     public ResponseBase insertMbrInfo(@ParameterObject MbrInfoVo param, HttpServletRequest httpServletRequest) {
         ResponseBase rb = new ResponseBase();
@@ -53,7 +53,7 @@ public class MbrInfoController extends BaseController {
 
         return rb;
     }
-    @Operation(summary = "회원정보 수정", description = "회원정보 수정")
+    @Operation(summary = "회원정보 수정", description = "회원정보 수정하는 메서드")
     @PostMapping("/updateMbrInfo")
     public ResponseBase updateMbrInfo(@ParameterObject MbrInfoVo param, HttpServletRequest httpServletRequest) {
         ResponseBase rb = new ResponseBase();
@@ -69,7 +69,7 @@ public class MbrInfoController extends BaseController {
         return rb;
     }
 
-    @Operation(summary = "회원정보 삭제", description = "회원정보 삭제")
+    @Operation(summary = "회원정보 삭제", description = "회원정보 삭제하는 메서드")
     @PostMapping("/deleteMbrInfo")
     public ResponseBase deleteMbrInfo(@ParameterObject MbrInfoVo param) {
         ResponseBase rb = new ResponseBase();
