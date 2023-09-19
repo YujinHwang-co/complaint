@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.Date;
+import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -18,6 +19,13 @@ import java.util.Date;
 public class MbrInfoService {
     private final PasswordEncoder passwordEncoder;
     private final MbrInfoRepository mbrInfoRepository;
+
+    public List<MbrInfoVo> listMbrInfo(MbrInfoVo param) {
+        return mbrInfoRepository.listMbrInfo(param);
+    }
+    public int getTotalCountMbrInfo(MbrInfoVo param) {
+        return mbrInfoRepository.getTotalCountMbrInfo(param);
+    }
 
     public MbrInfoVo getMbrInfo(MbrInfoVo param) {
         return mbrInfoRepository.getMbrInfo(param);

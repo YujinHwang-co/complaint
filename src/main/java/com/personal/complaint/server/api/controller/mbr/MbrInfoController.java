@@ -1,6 +1,7 @@
 package com.personal.complaint.server.api.controller.mbr;
 
 import com.personal.complaint.server.global.BaseController;
+import com.personal.complaint.server.global.Constants;
 import com.personal.complaint.server.global.ResponseBase;
 import com.personal.complaint.server.model.MbrInfoVo;
 import com.personal.complaint.server.service.mbr.MbrInfoService;
@@ -14,14 +15,47 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
-@Tag(name = "MbrInfo API Controller", description = "회원정보 관련 MbrInfo API controller")
+import java.util.List;
+
+@Tag(name = "MbrInfo API Controller", description = "회원정보 관련 MbrInfo API contrRoller")
 @Slf4j
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/mbr")
 public class MbrInfoController extends BaseController {
     private final MbrInfoService mbrInfoService;
+
+    @Operation(summary = "회원정보 리스트 조회", description = "회원정보 리스트 조회")
+    @GetMapping("/listMbrInfo")
+
+    public ResponseBase listMbrInfo(@ParameterObject MbrInfoVo param) {
+        ResponseBase rb = new ResponseBase();
+
+        if(param.getPage() == 0) param.setPage(1);
+        int currentPage =  param.getPage();
+        int pageSize = Constants.PAGE_SIZE;
+        if( param.getPageSize() == 0 ) param.setPageSize(pageSize);
+
+        param.setOffSet( (currentPage - 1) * param.getPageSize());
+        Pageable pageable = PageRequest.of(currentPage - 1, param.getPageSize());
+
+        int totalCount = mbrInfoService.getTotalCountMbrInfo(param);
+        List<MbrInfoVo> list = mbrInfoService.listMbrInfo(param);
+
+        if(list != null) {
+            Page<MbrInfoVo> newList = new PageImpl<>(list, pageable, totalCount);
+            rb.setStatusCodeMsg(1, "성공", newList);
+        } else {
+            rb.setStatusCodeMsg(0, "실패");
+        }
+
+        return rb;
+    }
 
     @Operation(summary = "회원정보 상세 조회", description = "회원정보 상세 조회")
     @GetMapping("/getMbrInfo")

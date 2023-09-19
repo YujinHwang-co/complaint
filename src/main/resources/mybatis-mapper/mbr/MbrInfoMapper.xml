@@ -15,6 +15,15 @@
     , a.join_dt
     , a.last_mdf_dt
 </sql>
+<select id="listMbrInfo" parameterType="com.personal.complaint.server.model.MbrInfoVo" resultType="com.personal.complaint.server.model.MbrInfoVo">
+    select <include refid="listColumns"><property name="alias" value="a"/></include>
+    from complaint.mbr_info as a
+</select>
+
+<select id="getTotalCountMbrInfo" parameterType="com.personal.complaint.server.model.MbrInfoVo" resultType="int">
+    select count(*)
+    from complaint.mbr_info
+</select>
 <select id="getMbrInfo" parameterType="com.personal.complaint.server.model.MbrInfoVo" resultType="com.personal.complaint.server.model.MbrInfoVo">
     select <include refid="listColumns"><property name="alias" value="a"/></include>
     from complaint.mbr_info as a

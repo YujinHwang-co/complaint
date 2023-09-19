@@ -1,12 +1,13 @@
 package com.personal.complaint.server.model;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 
 import java.util.Date;
 
 @Data
-public class MbrInfoVo {
+public class MbrInfoVo extends PagingVo{
     @Schema(description = "회원 번호")
     Long mbrSeq;
     @Schema(description = "회원 ID")
