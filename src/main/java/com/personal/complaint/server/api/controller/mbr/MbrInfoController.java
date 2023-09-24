@@ -32,12 +32,11 @@ public class MbrInfoController extends BaseController {
 
     @Operation(summary = "회원정보 리스트 조회", description = "회원정보 리스트 조회")
     @GetMapping("/listMbrInfo")
-
     public ResponseBase listMbrInfo(@ParameterObject MbrInfoVo param) {
         ResponseBase rb = new ResponseBase();
 
         if(param.getPage() == 0) param.setPage(1);
-        int currentPage =  param.getPage();
+        int currentPage = param.getPage();
         int pageSize = Constants.PAGE_SIZE;
         if( param.getPageSize() == 0 ) param.setPageSize(pageSize);
 

@@ -3,32 +3,55 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.personal.complaint.server.repository.mbr.MbrInfoRepository">
-<sql id = "listColumns">
-    a.mbr_seq
-    , a.mbr_id
-    , a.mbr_nm
-    , a.mbtlnum
-    , a.zip
-    , a.addr
-    , a.addr_detail
-    , a.password
-    , a.join_dt
-    , a.last_mdf_dt
+<sql id="listColumns">
+    mbr_seq
+    ,mbr_id
+    ,mbr_nm
+    ,mbtlnum
+    ,zip
+    ,addr
+    ,addr_detail
+    ,password
+    ,join_dt
+    ,last_mdf_dt
 </sql>
+<sql id="searchOption">
+    <if test="searchKey != null and searchKey != '' and searchValue != null and searchValue != ''">
+        AND (
+        <choose>
+            <when test="searchKey == 'mbrId'">mbr_id</when>
+            <when test="searchKey == 'mbrNm'">mbr_nm</when>
+            <when test="searchKey == 'mbtlnum'">mbtlnum</when>
+        </choose>
+        like concat('%',#{searchValue},'%')
+        )
+    </if>
+</sql>
+
 <select id="listMbrInfo" parameterType="com.personal.complaint.server.model.MbrInfoVo" resultType="com.personal.complaint.server.model.MbrInfoVo">
-    select <include refid="listColumns"><property name="alias" value="a"/></include>
-    from complaint.mbr_info as a
+    select <include refid="listColumns"></include>
+    from complaint.mbr_info
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+        <include refid="searchOption"></include>
+    </trim>
+    order by join_dt desc
+    <if test="pageSize != null and pageSize != ''"> limit #{pageSize} offset #{offSet}</if>
 </select>
 
 <select id="getTotalCountMbrInfo" parameterType="com.personal.complaint.server.model.MbrInfoVo" resultType="int">
     select count(*)
     from complaint.mbr_info
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+        <include refid="searchOption"></include>
+    </trim>
 </select>
+
 <select id="getMbrInfo" parameterType="com.personal.complaint.server.model.MbrInfoVo" resultType="com.personal.complaint.server.model.MbrInfoVo">
-    select <include refid="listColumns"><property name="alias" value="a"/></include>
+    select <include refid="listColumns"></include>
     from complaint.mbr_info as a
     where mbr_seq = #{mbrSeq}
 </select>
+
 <insert id="insertMbrInfo" parameterType="com.personal.complaint.server.model.MbrInfoVo" useGeneratedKeys="true" keyProperty="mbrSeq" keyColumn="mbr_seq">
     insert into complaint.mbr_info
     set join_dt = NOW()
