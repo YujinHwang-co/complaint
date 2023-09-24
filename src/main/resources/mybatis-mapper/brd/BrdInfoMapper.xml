@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.personal.complaint.server.repository.brd.BrdInfoRepository">
+<sql id="listColumns">
+    brd_seq
+    ,category
+    ,brd_title
+    ,brd_content
+    ,mbr_seq
+    ,attch_file_path
+    ,longitude
+    ,latitude
+    ,frst_rgst_dt
+    ,last_mdf_dt
+</sql>
+
+<sql id="searchOption">
+    <if test="searchKey != null and searchKey != '' and searchValue != null and searchValue != ''">
+        AND (
+        <choose>
+            <when test="searchKey == brdTitle">brd_title</when>
+        </choose>
+        like concat('%', #{searchValue}, '%')
+        )
+    </if>
+</sql>
+
+<select id="listBrdInfo" parameterType="com.personal.complaint.server.model.BrdInfoVo" resultType="com.personal.complaint.server.model.BrdInfoVo">
+    select <include refid="listColumns"></include>
+    from complaint.brd_info
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+        <include refid="searchOption"></include>
+    </trim>
+    <if test="pageSize != null and pageSize != ''"> limit #{pageSize} offset #{offSet}</if>
+</select>
+
+<select id="getTotalCountBrdInfo" parameterType="com.personal.complaint.server.model.BrdInfoVo" resultType="int">
+    select count(*)
+    from complaint.brd_info
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+        <include refid="searchOption"></include>
+    </trim>
+</select>
+
+<select id="getBrdInfo" parameterType="com.personal.complaint.server.model.BrdInfoVo" resultType="com.personal.complaint.server.model.BrdInfoVo">
+    select <include refid="listColumns"></include>
+    from complaint.brd_info
+    where brd_seq = #{brdSeq}
+</select>
+
+<insert id="insertBrdInfo" parameterType="com.personal.complaint.server.model.BrdInfoVo" useGeneratedKeys="true" keyProperty="brdSeq" keyColumn="brd_seq">
+
+</insert>
+
+<update id="updateBrdInfo" parameterType="com.personal.complaint.server.model.BrdInfoVo">
+
+</update>
+
+<delete id="deleteBrdInfo" parameterType="com.personal.complaint.server.model.BrdInfoVo">
+
+</delete>
+
+</mapper>
