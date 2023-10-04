@@ -7,6 +7,7 @@ import com.personal.complaint.server.model.BrdInfoVo;
 import com.personal.complaint.server.service.brd.BrdInfoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springdoc.core.annotations.ParameterObject;
@@ -15,6 +16,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -47,6 +49,69 @@ public class BrdInfoController extends BaseController {
         if(list != null) {
             Page<BrdInfoVo> newList = new PageImpl<>(list, pageable, totalCount);
             rb.setStatusCodeMsg(1, "성공", newList);
+        } else {
+            rb.setStatusCodeMsg(0, "실패");
+        }
+
+        return rb;
+    }
+
+    @Operation(summary = "게시글 조회", description = "게시글 조회")
+    @GetMapping("/getBrdInfo")
+    public ResponseBase getBrdInfo(@ParameterObject BrdInfoVo param) {
+        ResponseBase rb = new ResponseBase();
+        
+        BrdInfoVo vo = brdInfoService.getBrdInfo(param);
+        if(vo != null) {
+            rb.setStatusCodeMsg(1, "성공");
+        } else {
+            rb.setStatusCodeMsg(0, "실패");
+        }
+
+        return rb;
+    }
+
+    @Operation(summary = "게시글 등록", description = "게시글 등록")
+    @PostMapping("/insertBrdInfo")
+    public ResponseBase insertBrdInfo(@ParameterObject BrdInfoVo param, HttpServletRequest httpServletRequest) {
+        ResponseBase rb = new ResponseBase();
+
+        int result = brdInfoService.insertBrdInfo(param, httpServletRequest);
+
+        if(result > 0) {
+            rb.setStatusCodeMsg(1, "성공");
+        } else {
+            rb.setStatusCodeMsg(0, "실패");
+        }
+
+        return rb;
+    }
+
+    @Operation(summary = "게시글 수정", description = "게시글 수정")
+    @PostMapping("/updateBrdInfo")
+    public ResponseBase updateBrdInfo(@ParameterObject BrdInfoVo param, HttpServletRequest httpServletRequest) {
+        ResponseBase rb = new ResponseBase();
+
+        int result = brdInfoService.updateBrdInfo(param, httpServletRequest);
+
+        if(result > 0) {
+            rb.setStatusCodeMsg(1, "성공");
+        } else {
+            rb.setStatusCodeMsg(0, "실패");
+        }
+
+        return rb;
+    }
+
+    @Operation(summary = "게시글 삭제", description = "게시글 삭제")
+    @PostMapping("/deleteBrdInfo")
+    public ResponseBase deleteBrdInfo(@ParameterObject BrdInfoVo param) {
+        ResponseBase rb = new ResponseBase();
+
+        int result = brdInfoService.deleteBrdInfo(param);
+
+        if(result > 0) {
+            rb.setStatusCodeMsg(1, "성공");
         } else {
             rb.setStatusCodeMsg(0, "실패");
         }

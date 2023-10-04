@@ -51,15 +51,31 @@
 </select>
 
 <insert id="insertBrdInfo" parameterType="com.personal.complaint.server.model.BrdInfoVo" useGeneratedKeys="true" keyProperty="brdSeq" keyColumn="brd_seq">
-
+    insert into complaint.brd_info
+    set frst_rgst_dt = NOW()
+    <if test="brdTitle != null">,brd_title = #{brdTitle}</if>
+    <if test="category != null">,category = #{category}</if>
+    <if test="brdContent != null">,brd_content = #{brdContent}</if>
+    <if test="mbrSeq != null">,mbr_seq = #{mbrSeq}</if>
+    <if test="attchFilePath != null">,attch_file_path = #{attchFilePath}</if>
+    <if test="longtitude != null">,longtitude = #{longtitude}</if>
+    <if test="latitude != null">,latitude = #{latitude}</if>
 </insert>
 
 <update id="updateBrdInfo" parameterType="com.personal.complaint.server.model.BrdInfoVo">
-
+    update complaint.brd_info
+    set last_mdf_dt = NOW()
+    <if test="brdTitle != null">,brd_title = #{brdTitle}</if>
+    <if test="category != null">,category = #{category}</if>
+    <if test="mbrSeq != null">,mbr_seq = #{mbrSeq}</if>
+    <if test="attchFilePath != null">,attch_file_path = #{attchFilePath}</if>
+    <if test="longtitude != null">,longtitude = #{longtitude}</if>
+    <if test="latitude != null">,latitude = #{latitude}</if>
 </update>
 
 <delete id="deleteBrdInfo" parameterType="com.personal.complaint.server.model.BrdInfoVo">
-
+    delete from complaint.brd_info
+    where brd_seq = #{brdSeq}
 </delete>
 
 </mapper>
