@@ -15,10 +15,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -104,7 +101,7 @@ public class BrdInfoController extends BaseController {
     }
 
     @Operation(summary = "게시글 삭제", description = "게시글 삭제")
-    @PostMapping("/deleteBrdInfo")
+    @DeleteMapping("/deleteBrdInfo")
     public ResponseBase deleteBrdInfo(@ParameterObject BrdInfoVo param) {
         ResponseBase rb = new ResponseBase();
 

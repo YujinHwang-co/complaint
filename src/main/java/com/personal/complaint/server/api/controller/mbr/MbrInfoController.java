@@ -11,10 +11,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springdoc.core.annotations.ParameterObject;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -22,7 +19,7 @@ import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
-@Tag(name = "MbrInfo API Controller", description = "회원정보 관련 MbrInfo API contrRoller")
+@Tag(name = "MbrInfo API Controller", description = "회원정보 관련 MbrInfo API Controller")
 @Slf4j
 @RequiredArgsConstructor
 @RestController
@@ -71,6 +68,10 @@ public class MbrInfoController extends BaseController {
         return rb;
     }
 
+    /**
+     * TODO: auth 패키지로 이동 securityConfig /api/auth/** 설정
+     * @method insertMbrInfo
+     */
     @Operation(summary = "회원정보 저장(회원 가입)", description = "회원정보 저장(회원 가입)하는 메서드")
     @PostMapping("/insertMbrInfo")
     public ResponseBase insertMbrInfo(@ParameterObject MbrInfoVo param, HttpServletRequest httpServletRequest) {
@@ -103,7 +104,7 @@ public class MbrInfoController extends BaseController {
     }
 
     @Operation(summary = "회원정보 삭제", description = "회원정보 삭제하는 메서드")
-    @PostMapping("/deleteMbrInfo")
+    @DeleteMapping("/deleteMbrInfo")
     public ResponseBase deleteMbrInfo(@ParameterObject MbrInfoVo param) {
         ResponseBase rb = new ResponseBase();
 
