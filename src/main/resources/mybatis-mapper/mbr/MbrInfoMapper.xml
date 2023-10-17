@@ -7,6 +7,7 @@
     mbr_seq
     ,mbr_id
     ,mbr_nm
+    ,mbr_type
     ,mbtlnum
     ,zip
     ,addr
@@ -14,6 +15,8 @@
     ,password
     ,join_dt
     ,last_mdf_dt
+    ,refresh_token
+    ,refresh_token_expire
 </sql>
 <sql id="searchOption">
     <if test="searchKey != null and searchKey != '' and searchValue != null and searchValue != ''">
@@ -49,7 +52,11 @@
 <select id="getMbrInfo" parameterType="com.personal.complaint.server.model.MbrInfoVo" resultType="com.personal.complaint.server.model.MbrInfoVo">
     select <include refid="listColumns"></include>
     from complaint.mbr_info as a
-    where mbr_seq = #{mbrSeq}
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+        <if test="mbrSeq != null">and a.mbr_seq = #{mbrSeq}</if>
+        <if test="mbrId != null">and a.mbr_id = #{mbrId}</if>
+        <include refid="searchOption"></include>
+    </trim>
 </select>
 
 <insert id="insertMbrInfo" parameterType="com.personal.complaint.server.model.MbrInfoVo" useGeneratedKeys="true" keyProperty="mbrSeq" keyColumn="mbr_seq">
@@ -57,6 +64,7 @@
     set join_dt = NOW()
     <if test="mbrId != null">,mbr_id = #{mbrId}</if>
     <if test="mbrNm != null">,mbr_nm = #{mbrNm}</if>
+    <if test="mbrType != null">,mbr_type = #{mbrType}</if>
     <if test="mbtlnum != null">,mbtlnum = #{mbtlnum}</if>
     <if test="zip != null">,zip = #{zip}</if>
     <if test="addr != null">,addr = #{addr}</if>
@@ -69,6 +77,7 @@
     set last_mdf_dt = NOW()
     <if test="mbrId != null">,mbr_id = #{mbrId}</if>
     <if test="mbrNm != null">,mbr_nm = #{mbrNm}</if>
+    <if test="mbrType != null">,mbr_type = #{mbrType}</if>
     <if test="mbtlnum != null">,mbtlnum = #{mbtlnum}</if>
     <if test="zip != null">,zip = #{zip}</if>
     <if test="addr != null">,addr = #{addr}</if>
